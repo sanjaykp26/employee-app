@@ -41,7 +41,7 @@ export class LoginComponent {
     if (success) {
       this.router.navigate(['/employee']);
     } else {
-      this.errorMessage = 'Invalid username or password.';
+      this.errorMessage = 'Invalid Credentials!';
     }
   }
   get f() {

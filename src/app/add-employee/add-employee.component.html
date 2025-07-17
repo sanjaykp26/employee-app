@@ -12,7 +12,7 @@
       <label class="form-label">Contact No</label>
       <input type="text" class="form-control" formControlName="contact" />
       <small class="text-danger" *ngIf="submitted && f['contact'].errors?.['required']">Contact is required</small>
-      <small class="text-danger" *ngIf="submitted && f['contact'].errors?.['pattern']">Contact must be 10 digits</small>
+      <small class="text-danger" *ngIf="submitted && f['contact'].errors?.['pattern']">Contact must be 10 numeric digits</small>
     </div>
 
     <div class="mb-3">

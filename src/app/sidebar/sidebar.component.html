@@ -1,18 +1,19 @@
 <div class="d-flex flex-column flex-md-row min-vh-100 overflow-hidden">
+  <!-- Sidebar -->
   <nav
-    class="bg-white border-end p-3 w-100 w-md-25"
+    class="bg-white border-end p-3 w-100 w-md-25 d-flex flex-column"
     [ngClass]="{ 'd-none': !sidebarVisible && isSmallScreen }"
-    style="max-width: 240px"
+    style="max-width: 240px; height: 100vh; overflow: hidden;"
   >
-    <ul class="list-unstyled">
+    <ul class="list-unstyled flex-grow-0">
       <li class="mb-3">
         <a routerLink="/employee" class="text-decoration-none text-dark d-flex align-items-center">
-          <i class="bi bi-clipboard-check me-2"></i> Employee
+          <i class="bi bi-people me-2"></i> Employee
         </a>
       </li>
       <li class="mb-3">
         <a routerLink="/apidatatable" class="text-decoration-none text-dark d-flex align-items-center">
-          <i class="bi bi-house-door me-2"></i> API DataTable
+          <i class="bi bi-table me-2"></i> API DataTable
         </a>
       </li>
     </ul>
@@ -24,15 +25,16 @@
     </div>
   </nav>
 
- 
-  <div class="flex-grow-1 d-flex flex-column">
-
+  <!-- Content -->
+  <div class="flex-grow-1 d-flex flex-column" style="height: 100vh;">
+    <!-- Mobile Header -->
     <div class="d-md-none p-2 border-bottom bg-white d-flex justify-content-between align-items-center">
       <button class="btn btn-sm btn-outline-primary" (click)="toggleSidebar()">
         <i class="bi bi-list"></i>
       </button>
     </div>
 
+    <!-- Main Scrollable Content -->
     <div class="p-3 flex-grow-1 overflow-auto">
       <router-outlet></router-outlet>
     </div>

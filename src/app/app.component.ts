@@ -15,7 +15,7 @@ import { AuthService } from './services/auth.services';
 })
 export class AppComponent {
   title = 'employee-app';
-  isLoggedIn! :boolean;
+  isLoggedIn :boolean=false;
   constructor(public auth: AuthService) {}
   ngOnInit(): void {
     this.auth.isLoggedIn.subscribe((status) => {
