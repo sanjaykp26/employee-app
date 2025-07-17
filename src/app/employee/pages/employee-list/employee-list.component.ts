@@ -1,0 +1,139 @@
+import { Component, inject } from '@angular/core';
+import { EmployeeService } from '../../services/employee.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-employee-list',
+  imports: [CommonModule,FormsModule],
+  templateUrl: './employee-list.component.html',
+  styleUrl: './employee-list.component.css'
+})
+export class EmployeeListComponent {
+  users: any[] = [];
+  searchText: string = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
+  sortField: string = 'name';
+  searchField: string = 'name'; // Default search by name
+
+  displayedEmployees: any[] = [];
+  currentPage = 1;
+  pageSize = 15;
+
+  private service = inject(EmployeeService);
+
+  ngOnInit(): void {
+    this.service.getUsers().subscribe({
+      next: (res) => {
+        this.users = res.data;
+        this.updatePagination(); 
+        console.log('Users fetched:', this.users);
+      },
+      error: (err) => {
+        console.error('Error fetching users:', err);
+      }
+    });
+  }
+
+
+  get filteredUsers(): any[] {
+    const keyword = this.searchText.toLowerCase();
+  
+    const filtered = this.users.filter((user: any) => {
+      const value = this.resolveValue(user, this.searchField)?.toString().toLowerCase() ?? '';
+      return value.includes(keyword);
+    });
+  
+    return filtered.sort((a, b) => {
+      let aVal = this.resolveValue(a, this.sortField)?.toString().toLowerCase() ?? '';
+      let bVal = this.resolveValue(b, this.sortField)?.toString().toLowerCase() ?? '';
+      const result = aVal.localeCompare(bVal);
+      return this.sortDirection === 'asc' ? result : -result;
+    });
+  }
+  
+
+  updatePagination(): void {
+    const startIndex = this.getStartIndexForPage(this.currentPage);
+    const endIndex = this.getEndIndexForPage(this.currentPage);
+    const filtered = this.filteredUsers
+    this.displayedEmployees = filtered.slice(startIndex, endIndex);
+  }
+  
+
+  sortColumn(column: string): void {
+    if (this.sortField === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortField = column;
+      this.sortDirection = 'asc';
+    }
+    this.updatePagination(); 
+  }
+
+  
+  onSearchChange(): void {
+    this.currentPage = 1;
+    this.updatePagination();
+  }
+
+ 
+  nextPage(): void {
+    const nextStartIndex = this.getStartIndexForPage(this.currentPage + 1);
+    if (nextStartIndex < this.filteredUsers.length) {
+      this.currentPage++;
+      this.updatePagination();
+    }
+  }
+  
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagination();
+    }
+  }
+ 
+  
+
+  deleteUser(userToDelete: any): void {
+    this.users = this.users.filter(user => user !== userToDelete);
+    this.updatePagination();
+  }
+
+
+  resolveValue(obj: any, key: string): any {
+    if (key === 'city') return obj?.address?.city;
+    return obj[key];
+  }
+
+
+  getSortIcon(column: string): string {
+    if (this.sortField !== column) return 'bi bi-caret-down';
+    return this.sortDirection === 'asc' ? 'bi bi-caret-up-fill' : 'bi bi-caret-down-fill';
+  }
+  getPageSize(page: number): number {
+    return page === 1 ? 15 : 10;
+  }
+  
+  getStartIndexForPage(page: number): number {
+    if (page <= 1) return 0;
+    return 15 + (page - 2) * 10;
+  }
+  
+  getEndIndexForPage(page: number): number {
+    return this.getStartIndexForPage(page) + this.getPageSize(page);
+  }
+  getStartIndex(): number {
+    return this.getStartIndexForPage(this.currentPage);
+  }
+  
+  getEndIndex(): number {
+    const end = this.getEndIndexForPage(this.currentPage);
+    return end > this.filteredUsers.length ? this.filteredUsers.length : end;
+  }
+  toggleSortDirection(): void {
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    this.updatePagination();
+  }
+  
+}  

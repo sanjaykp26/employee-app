@@ -1,0 +1,86 @@
+<div class="container border rounded bg-white shadow-sm" style="margin-left: 180px;">
+  <!-- 🔵 Header with New Button -->
+  <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+    <h4 class="fw-bold text-primary mb-0">Employee Table</h4>
+    <button class="btn btn-primary" (click)="open()">New</button>
+  </div>
+
+  <!-- 🔍 Search, Sort, and Filter Row -->
+  <div class="row g-3 px-3 pt-3">
+    <div class="col-md-3">
+      <label class="form-label fw-semibold">Search By</label>
+      <select class="form-select" [(ngModel)]="searchField" (change)="onSearchChange()">
+        <option value="name">Name</option>
+        <option value="email">Email</option>
+        <option value="contact">Contact</option>
+        <option value="address">Address</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label fw-semibold">Search</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter keyword"
+        [(ngModel)]="searchText"
+        (input)="onSearchChange()"
+      />
+    </div>
+
+    <div class="col-md-3">
+      <label class="form-label fw-semibold">Sort By</label>
+      <select class="form-select" [(ngModel)]="sortField" (change)="onSearchChange()">
+        <option value="name">Name</option>
+        <option value="email">Email</option>
+        <option value="contact">Contact</option>
+        <option value="address">Address</option>
+      </select>
+    </div>
+
+    <div class="col-md-2">
+      <label class="form-label fw-semibold d-block">Direction</label>
+      <button class="btn btn-outline-secondary w-100" (click)="toggleSortDirection()">
+        <i class="bi" [ngClass]="sortDirection === 'asc' ? 'bi-sort-alpha-down' : 'bi-sort-alpha-up'"></i>
+        {{ sortDirection === 'asc' ? 'A-Z' : 'Z-A' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- 📋 Table Header -->
+  <div class="row bg-light p-2 mt-4 border rounded-top fw-semibold text-secondary mx-0">
+    <div class="col-md-3">Name</div>
+    <div class="col-md-3">Email</div>
+    <div class="col-md-2">Contact</div>
+    <div class="col-md-2">Address</div>
+    <div class="col-md-2 text-end">Actions</div>
+  </div>
+
+  <!-- 🧾 Employee Rows -->
+  <div *ngFor="let emp of displayedEmployees" class="row border border-top-0 py-3 align-items-center mx-0">
+    <div class="col-md-3 fw-bold text-truncate">{{ emp.name }}</div>
+    <div class="col-md-3">{{ emp.email }}</div>
+    <div class="col-md-2">{{ emp.contact }}</div>
+    <div class="col-md-2 text-wrap small">{{ emp.address }}</div>
+    <div class="col-md-2 text-end">
+      <button class="btn btn-outline-danger btn-sm" (click)="delete(emp)">
+        <i class="bi bi-trash"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- 🔢 Pagination -->
+  <div class="d-flex justify-content-between align-items-center mt-4 px-3 pb-3">
+    <div class="text-muted small">
+      Showing {{ getStartIndex() + 1 }} – {{ getEndIndex() }} of {{ filteredEmployees.length }}
+    </div>
+    <div class="d-flex gap-2">
+      <button class="btn btn-outline-primary btn-sm" (click)="prevPage()" [disabled]="currentPage === 1">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <button class="btn btn-outline-primary btn-sm" (click)="nextPage()" [disabled]="getEndIndex() >= filteredEmployees.length">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</div>

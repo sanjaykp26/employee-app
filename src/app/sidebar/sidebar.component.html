@@ -1,0 +1,36 @@
+<div class="d-flex" style="min-height: 100vh; overflow: hidden;">
+  <!-- Sidebar -->
+  <div class="sidebar bg-white border-end d-flex flex-column justify-between" style="width: 200px;">
+    
+    <!-- Top Menu -->
+    <div class="flex-grow-1">
+      <ul class="list-unstyled p-3">
+        <li class="mb-2">
+          <a routerLink="/apidatatable" class="text-decoration-none text-dark d-flex align-items-center">
+            <i class="bi bi-house-door me-2"></i> Api datable
+          </a>
+        </li>
+        <li class="mb-2">
+          <a routerLink="/employee" class="text-decoration-none text-dark d-flex align-items-center">
+            <i class="bi bi-clipboard-check me-2"></i> Employee
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 🔓 Logout Button at Bottom -->
+    <div class="p-3" style="position: absolute; bottom: 0; width: 100%;">
+      <button class="btn btn-outline-danger btn-sm w-100" (click)="logout()">
+        <i class="bi bi-box-arrow-right me-1"></i> Logout
+      </button>
+    </div>
+  </div>
+
+ 
+  <div class="flex-grow-1 d-flex flex-column">
+   
+    <div class="p-4">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
