@@ -7,11 +7,11 @@ import { AddEmployeeComponent } from './add-employee/add-employee.component';
 
 
 export const routes: Routes = [
-  // {
-  //   path: '',
-  //   redirectTo: 'login',
-  //   pathMatch: 'full'
-  // },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
 
   {
     path: 'login',
@@ -38,9 +38,9 @@ export const routes: Routes = [
   },
 
   // fallback route
-  // {
-  //   path: '**',
-  //   redirectTo: 'login'
-  // }
+  {
+    path: '**',
+    redirectTo: 'login'
+  }
 ];
 
