@@ -35,9 +35,9 @@ export class AddEmployeeComponent {
 
     this.empService.addEmployee(this.employeeForm.value);
 
-    // Ge
+   
 
     alert('Employee added successfully!');
-    this.router.navigate(['/employee']); // Redirect to employee list
+    this.router.navigate(['/employee']); 
   }
 }

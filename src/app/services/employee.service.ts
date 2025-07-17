@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { EMPLOYEES } from '../employee/models/data';
 
 export interface Employee {
   name: string;
@@ -12,7 +13,7 @@ export interface Employee {
   providedIn: 'root'
 })
 export class EmployeeService {
-  private employees = new BehaviorSubject<Employee[]>([]);
+  private employees = new BehaviorSubject<Employee[]>([...EMPLOYEES]);
   employees$ = this.employees.asObservable();
 
   addEmployee(employee: Employee) {

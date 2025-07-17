@@ -30,31 +30,42 @@
         <div class="mb-3">
           <label>Username</label>
           <input type="email"  formControlName="username" class="form-control bg-transparent border-bottom text-white rounded-0 shadow-none" placeholder="Email" />
+          <small class="text-danger" *ngIf="submitted && f['username'].errors?.['required']">Name is required</small>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 position-relative">
           <label>Password</label>
-          <input type="password"  formControlName="password" class="form-control bg-transparent border-bottom text-white rounded-0 shadow-none" placeholder="Password" />
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            class="form-control bg-transparent border-bottom text-white rounded-0 shadow-none pe-5"
+            placeholder="Password" />
+        
+          <!-- 👁 Eye Icon -->
+          <i
+            class="bi"
+            [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"
+            (click)="togglePasswordVisibility()"
+            style="position: absolute; right: 10px; top: 36px; cursor: pointer;"
+          ></i>
+        
+          <small class="text-danger" *ngIf="submitted && f['password'].errors?.['required']">
+            Password is required
+          </small>
         </div>
+        
 
         <div class="text-danger small" *ngIf="errorMessage">
           {{ errorMessage }}
         </div>
     
-        <div class="form-check mb-4">
-          <input class="form-check-input" type="checkbox" id="termsCheck" />
-          <label class="form-check-label" for="termsCheck">
-            I agree to the <a href="#" class="text-decoration-underline text-info">terms of service</a>
-          </label>
-        </div>
+       
 
         <button type="submit" class="btn btn-danger w-100 mb-3 fw-semibold">
           Sign up <i class="bi bi-arrow-right"></i>
         </button>
 
-        <div class="text-center">
-          <small>Already have an account? <a href="#" class="text-info">Log in</a></small>
-        </div>
+      
       </form>
     </div>
 

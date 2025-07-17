@@ -44,6 +44,15 @@ export class LoginComponent {
       this.errorMessage = 'Invalid username or password.';
     }
   }
+  get f() {
+    return this.loginForm.controls;
+  }
+  showPassword: boolean = false;
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+  
 }
 
 

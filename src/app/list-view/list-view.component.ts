@@ -13,7 +13,7 @@ import { EMPLOYEES } from '../employee/models/data';
 })
 export class ListViewComponent {
   constructor(private router: Router, private empService: EmployeeService) {}
-  employees: Employee[] = EMPLOYEES;
+  employees: Employee[] = [];
 
   searchText = '';
   sortField = 'name';
@@ -24,7 +24,10 @@ export class ListViewComponent {
   pageSize = 10;
 
   ngOnInit(): void {
-    this.updatePagination();
+    this.empService.employees$.subscribe((emps) => {
+      this.employees = emps;
+      this.updatePagination();
+    });
   }
   getValue(emp: Employee, key: string): string {
     return (emp as any)[key] || '';
