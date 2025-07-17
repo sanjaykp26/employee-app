@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployeeService } from '../services/employee.service';
@@ -14,7 +14,9 @@ export class AddEmployeeComponent {
   employeeForm!: FormGroup;
   submitted = false;
 
-  constructor(private fb: FormBuilder,private empService: EmployeeService, private router: Router) {}
+  private fb = inject(FormBuilder);
+  private empService = inject(EmployeeService);
+  private router = inject(Router);
 
   ngOnInit(): void {
     this.employeeForm = this.fb.group({
@@ -35,9 +37,10 @@ export class AddEmployeeComponent {
 
     this.empService.addEmployee(this.employeeForm.value);
 
-   
-
-    alert('Employee added successfully!');
     this.router.navigate(['/employee']); 
   }
+  onCancel(): void {
+    this.router.navigate(['/employee']); 
+  }
+  
 }

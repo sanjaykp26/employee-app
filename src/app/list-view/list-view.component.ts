@@ -20,8 +20,8 @@ export class ListViewComponent {
   sortDirection: 'asc' | 'desc' = 'asc';
   currentPage = 1;
   searchField: string = 'name';
-  displayedEmployees: any[] = [];
-  pageSize = 10;
+  displayedEmployees: Employee[] = [];
+  pageSize = 15;
 
   ngOnInit(): void {
     this.empService.employees$.subscribe((emps) => {
@@ -61,13 +61,27 @@ export class ListViewComponent {
     this.displayedEmployees = this.filteredEmployees.slice(start, end);
   }
 
+
+  getStartIndexForPage(page: number): number {
+    if (page <= 1) return 0;
+    return 15 + (page - 2) * 10;
+  }
+
+  getEndIndexForPage(page: number): number {
+    return this.getStartIndexForPage(page) + this.getPageSize(page);
+  }
+  getPageSize(page: number): number {
+    return page === 1 ? 15 : 10;
+  }
   getStartIndex(): number {
-    return (this.currentPage - 1) * this.pageSize;
+    return this.getStartIndexForPage(this.currentPage);
   }
 
   getEndIndex(): number {
-    return this.getStartIndex() + this.pageSize;
+    const end = this.getEndIndexForPage(this.currentPage);
+    return end > this.filteredEmployees.length ? this.filteredEmployees.length : end;
   }
+  
 
   nextPage(): void {
     if (this.getEndIndex() < this.filteredEmployees.length) {

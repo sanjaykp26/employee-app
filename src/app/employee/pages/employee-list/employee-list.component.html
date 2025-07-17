@@ -1,8 +1,11 @@
-<div class="container  border rounded bg-white shadow-sm "style="margin-left: 180px;">
-  <div class="pt-4 px-2">
-    <h4 class="fw-bold text-primary">API Data Table</h4>
+<div class="container bg-white border rounded shadow-sm my-4">
+  <!-- 🔹 Header -->
+  <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+    <h4 class="fw-bold text-primary mb-0">API Data Table</h4>
   </div>
-  <div class="row g-3 align-items-end mb-4">
+
+  <!-- 🔍 Filter Controls -->
+  <div class="row g-3 align-items-end px-3 pt-3 pb-2">
     <div class="col-md-3">
       <label class="form-label fw-semibold">Search By</label>
       <select
@@ -13,6 +16,7 @@
         <option value="name">Name</option>
         <option value="email">Email</option>
         <option value="phone">Phone</option>
+        <option value="gender">Gender</option>
         <option value="position">Position</option>
       </select>
     </div>
@@ -38,12 +42,13 @@
         <option value="name">Name</option>
         <option value="email">Email</option>
         <option value="phone">Phone</option>
+        <option value="gender">Gender</option>
         <option value="position">Position</option>
       </select>
     </div>
 
-    <div class="col-md-2 text-end">
-      <label class="form-label d-block fw-semibold">Direction</label>
+    <div class="col-md-2">
+      <label class="form-label fw-semibold">Direction</label>
       <button
         class="btn btn-outline-secondary w-100"
         (click)="toggleSortDirection()"
@@ -59,33 +64,38 @@
     </div>
   </div>
 
-  <div class="row bg-light p-2 border rounded-top fw-semibold text-secondary">
-    <div class="col-md-3">Name</div>
+  <!-- 🧾 Table Header -->
+  <div class="row bg-light fw-semibold text-secondary px-3 py-2 border-top border-bottom">
+    <div class="col-md-2">Name</div>
+    <div class="col-md-2">Gender</div>
     <div class="col-md-3">Email</div>
     <div class="col-md-2">Phone</div>
     <div class="col-md-2">Position</div>
-    <div class="col-md-2 text-end">Actions</div>
+    <div class="col-md-1 text-end">Actions</div>
   </div>
 
+  <!-- 👥 Table Rows -->
   <div
     *ngFor="let user of displayedEmployees"
-    class="row border border-top-0 py-3 align-items-center"
+    class="row align-items-center px-3 py-2 border-bottom"
   >
-    <div class="col-md-3 fw-bold text-truncate">{{ user.name }}</div>
-    <div class="col-md-3">{{ user.email }}</div>
+    <div class="col-md-2 fw-bold text-truncate">{{ user.name }}</div>
+    <div class="col-md-2">{{ user.gender }}</div>
+    <div class="col-md-3 text-truncate">{{ user.email }}</div>
     <div class="col-md-2">{{ user.phone }}</div>
     <div class="col-md-2 text-wrap small">{{ user.position || "N/A" }}</div>
-    <div class="col-md-2 text-end">
+    <div class="col-md-1 text-end">
       <button class="btn btn-outline-danger btn-sm" (click)="deleteUser(user)">
         <i class="bi bi-trash"></i>
       </button>
     </div>
   </div>
 
-  <div class="d-flex justify-content-between align-items-center mt-3">
-    <div class="text-muted small">
+  <!-- 📄 Pagination & Summary -->
+  <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2 mt-3 px-3 pb-3 text-center">
+    <div class="text-muted small mb-2 mb-md-0">
       Showing {{ getStartIndex() + 1 }} – {{ getEndIndex() }} of
-      {{ filteredUsers.length }} 
+      {{ filteredUsers.length }}
     </div>
 
     <div class="d-flex gap-2">

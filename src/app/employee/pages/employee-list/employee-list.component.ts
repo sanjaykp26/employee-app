@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { EmployeeService } from '../../services/employee.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { User } from '../../models/data';
 
 @Component({
   selector: 'app-employee-list',
@@ -10,8 +11,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './employee-list.component.css'
 })
 export class EmployeeListComponent {
-  users: any[] = [];
-  displayedEmployees: any[] = [];
+  users: User[] = [];
+  displayedEmployees: User[] = [];
   currentPage = 1;
   pageSize = 15;
 
@@ -50,7 +51,7 @@ export class EmployeeListComponent {
     });
   }
 
-  get filteredUsers(): any[] {
+  get filteredUsers(): User[] {
     const keyword = this.searchText.toLowerCase();
     const filtered = this.users.filter((user: any) => {
       const value = this.resolveValue(user, this.searchField)?.toString().toLowerCase() ?? '';
@@ -108,7 +109,7 @@ export class EmployeeListComponent {
     this.updatePagination();
   }
 
-  deleteUser(userToDelete: any): void {
+  deleteUser(userToDelete: User): void {
     this.users = this.users.filter(user => user !== userToDelete);
     this.updatePagination();
   }

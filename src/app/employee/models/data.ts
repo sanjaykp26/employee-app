@@ -33,3 +33,14 @@ export const EMPLOYEES: Employee[] = [
   { name: 'Suraj Sinha', email: 'suraj.sinha@example.com', contact: '9890443322', address: 'Jamshedpur' },
   { name: 'Deepa Rani', email: 'deepa.rani@example.com', contact: '9786341290', address: 'Coimbatore' }
 ];
+export interface User {
+  id: number
+  name: string
+  phone: string
+  gender: string
+  email: string
+  department: string
+  position: string
+  dateOfJoining: string
+  salary: number
+}
