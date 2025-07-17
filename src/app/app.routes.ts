@@ -4,6 +4,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { EmployeeListComponent } from './employee/pages/employee-list/employee-list.component';
 import { ListViewComponent } from './list-view/list-view.component';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
+import { AuthGuard } from './auth.guard';
 
 
 export const routes: Routes = [
@@ -12,32 +13,25 @@ export const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
-
   {
     path: 'login',
     component: LoginComponent
   },
-
   {
     path: 'apidatatable',
-    component: EmployeeListComponent
-  
-   
+    component: EmployeeListComponent,
+    canActivate: [AuthGuard] 
   },
   {
     path: 'employee',
-    component: ListViewComponent
-  
-   
+    component: ListViewComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'employee/new',
-    component: AddEmployeeComponent
-  
-   
+    component: AddEmployeeComponent,
+    canActivate: [AuthGuard] 
   },
-
-  // fallback route
   {
     path: '**',
     redirectTo: 'login'

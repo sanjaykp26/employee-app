@@ -22,8 +22,7 @@ export class AppComponent {
       this.auth.isLoggedIn.subscribe((status) => {
         this.isLoggedIn = status;
         this.loading = false;
-      });
-    
+      })
     }
   
    
