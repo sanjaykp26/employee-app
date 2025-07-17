@@ -15,13 +15,20 @@ import { AuthService } from './services/auth.services';
 })
 export class AppComponent {
   title = 'employee-app';
-  isLoggedIn :boolean=false;
-  constructor(public auth: AuthService) {}
-  ngOnInit(): void {
-    this.auth.isLoggedIn.subscribe((status) => {
-      this.isLoggedIn = status;
-    });
-  }
+  isLoggedIn :boolean=false;  loading: boolean = true;
+  constructor(private auth: AuthService) {}
+ 
+    ngOnInit(): void {
+      this.auth.isLoggedIn.subscribe((status) => {
+        this.isLoggedIn = status;
+        this.loading = false;
+      });
+    
+    }
+  
+   
+    
+
 
  
 }

@@ -21,6 +21,7 @@ export class AuthService {
   }
 
   getUserInfo() {
-    return localStorage.getItem('user');
+    const data = localStorage.getItem('user');
+    return data ? JSON.parse(data) : null
   }
 }
